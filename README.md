@@ -13,7 +13,7 @@ Herramienta de investigación OSINT y panel de visualización de perfiles de Ins
 El sábado 14 de marzo en el festival Snowrow (Grandvalira, Andorra), tras dos días intensos de esquí, con la batería social al 1% y tras una noche sin apenas dormir, una chica se tropezó una vez a propósito conmigo y estuvimos cruzando miradas todo el rato durante la noche. Sin embargo, un ataque de timidez y agotamiento extremo provocó que no diera el paso de pedirle el contacto.
 
 En vez de pasar página como una persona normal, decidí sobreingenierizar una solución técnica en dos fases:
-1. **Fase 1 (Scraping de fuerza bruta y heurísticas):** Extracción de miles de likes y comentarios de los posts oficiales del festival y publicaciones geolocalizadas en Andorra durante esas fechas, clasificándolos mediante heurísticas lingüísticas y visualizándolos en un dashboard interactivo tipo "Facewall".
+1. **Fase 1 (Scraping con HikerAPI y heurísticas):** Extracción de datos de Instagram utilizando **HikerAPI** para recopilar miles de likes, comentarios de posts oficiales del festival y publicaciones geolocalizadas en Andorra durante esas fechas. Todos los datos de esta extracción se incluyen ya precargados y cacheados en el repositorio (`scrapedUsers.json`, etc.), lo que permite explorar la base de datos al instante sin necesidad de volver a scrapear ni gastar saldo de API. Los perfiles se clasifican mediante heurísticas lingüísticas y se exploran en un dashboard interactivo tipo "Facewall".
 2. **Fase 2 (Query distribuida vía Meta Ads):** Uso del motor de subastas de Meta Ads como una base de datos distribuida con segmentación booleana estricta: `(Música electrónica / Festivales)` **AND** `(Esquí / Andorra)`, acotado geográficamente a Madrid y Cataluña.
 
 ---
@@ -50,7 +50,7 @@ npm install
 ```bash
 npm run dev
 ```
-Abre tu navegador en [http://localhost:5173](http://localhost:5173). La aplicación arranca directamente en **Modo Demo**, utilizando los conjuntos de datos precargados y datos simulados para que puedas probarla sin necesidad de configurar ninguna API externa.
+Abre tu navegador en [http://localhost:5173](http://localhost:5173) (o entra en la [versión web en vivo](https://aamargant.github.io/snowgirl-finder/)). La aplicación arranca directamente con los conjuntos de datos reales cacheados de la extracción anterior (+4.000 perfiles analizados), por lo que puedes probarla y explorarla al instante sin necesidad de configurar ninguna API externa.
 
 ### 3. Modo Live API (Opcional)
 Haz clic en el icono de **Ajustes** en la barra superior e introduce tu clave de acceso de [HikerAPI](https://hikerapi.com) para rastrear likes y resolver perfiles en tiempo real.
