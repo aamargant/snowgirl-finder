@@ -4,11 +4,13 @@
 
 Herramienta de investigación OSINT y panel de visualización de perfiles de Instagram construida con **React 19**, **Vite** y **Node.js** para buscar programáticamente una conexión perdida en el festival **Snowrow 2026** (evento de elrow celebrado en Grandvalira, Andorra).
 
+🌐 **Web en Vivo (Live Demo):** [https://aamargant.github.io/snowgirl-finder/](https://aamargant.github.io/snowgirl-finder/)
+
 ---
 
 ## 📖 La Historia
 
-El sábado 14 de marzo en el festival Snowrow (Grandvalira, Andorra), tras dos días intensos de esquí, con la batería social al 1% y tras una noche sin apenas dormir, un ataque de timidez y cansancio provocó que no me atreviera a pedirle el contacto a una chica tras cruzar miradas y tropezar varias veces a propósito durante la noche.
+El sábado 14 de marzo en el festival Snowrow (Grandvalira, Andorra), tras dos días intensos de esquí, con la batería social al 1% y tras una noche sin apenas dormir, una chica se tropezó una vez a propósito conmigo y estuvimos cruzando miradas todo el rato durante la noche. Sin embargo, un ataque de timidez y agotamiento extremo provocó que no diera el paso de pedirle el contacto.
 
 En vez de pasar página como una persona normal, decidí sobreingenierizar una solución técnica en dos fases:
 1. **Fase 1 (Scraping de fuerza bruta y heurísticas):** Extracción de miles de likes y comentarios de los posts oficiales del festival y publicaciones geolocalizadas en Andorra durante esas fechas, clasificándolos mediante heurísticas lingüísticas y visualizándolos en un dashboard interactivo tipo "Facewall".
@@ -65,7 +67,6 @@ Haz clic en el icono de **Ajustes** en la barra superior e introduce tu clave de
 ├── src/
 │   ├── App.jsx               # Dashboard principal interactivo y Facewall
 │   ├── App.css               # Estilos glassmorphic y animación de nieve
-│   ├── mockData.js           # Datos de prueba para el modo demo
 │   └── main.jsx
 ├── vite.config.js            # Configuración de Vite con middleware proxy de imágenes
 └── package.json

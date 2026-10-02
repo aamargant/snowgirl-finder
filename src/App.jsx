@@ -4,7 +4,6 @@ import {
   BookOpen, Tag, Info, ExternalLink, MessageSquare, Settings, 
   User, Download, Upload, Play, Pause, RotateCcw, Copy, Trash2, Plus, Clock, RefreshCw, Grid
 } from 'lucide-react';
-import { mockPosts, mockUsers } from './mockData';
 import preScrapedUsers from './scrapedUsers.json';
 import preScrapedComments from './scrapedComments.json';
 import preScrapedLocationPosts from './scrapedLocationPosts.json';
@@ -33,7 +32,10 @@ const getProxiedImageUrl = (url) => {
   if (url.startsWith('data:') || url.startsWith('http://localhost') || url.includes('/api/image-proxy')) {
     return url;
   }
-  return `/api/image-proxy?url=${encodeURIComponent(url)}`;
+  if (import.meta.env.DEV) {
+    return `/api/image-proxy?url=${encodeURIComponent(url)}`;
+  }
+  return url;
 };
 
 // Heuristics lists for gender detection
@@ -643,10 +645,9 @@ function App() {
 
     if (demoMode) {
       setTimeout(() => {
-        const filteredMockPosts = mockPosts.filter(p => p.account.toLowerCase().includes(usernameInput.toLowerCase()));
-        setPosts(filteredMockPosts.length > 0 ? filteredMockPosts : mockPosts);
+        setPosts(targets);
         setIsLoadingPosts(false);
-        showBanner("Demo Mode: Loaded simulated posts from @" + usernameInput, "info");
+        showBanner("Demo Mode: Loaded target posts for @" + usernameInput, "info");
       }, 600);
       return;
     }
@@ -769,7 +770,7 @@ function App() {
       
       const startIdx = (page - 1) * batchSize;
       const endIdx = startIdx + batchSize;
-      const pageUsers = mockUsers.slice(startIdx, endIdx);
+      const pageUsers = (preScrapedUsers || []).slice(startIdx, endIdx);
       
       currentList = [...currentList, ...pageUsers];
       
@@ -931,7 +932,7 @@ function App() {
 
         if (demoMode) {
           await new Promise(r => setTimeout(r, 600));
-          const mockPage = mockUsers.slice(0, 10);
+          const mockPage = (preScrapedUsers || []).slice(0, 10);
           currentList = [...currentList, ...mockPage];
           setLikers(currentList);
           saveCacheForTarget(target.id, currentList);
@@ -1111,7 +1112,7 @@ function App() {
           ? getGroupedCommenters()
           : (viewMode === "all" 
               ? getAllScrapedDeduplicatedUsers()
-              : (likers.length > 0 ? likers : (demoMode ? mockUsers : []))));
+              : (likers.length > 0 ? likers : (demoMode ? (preScrapedUsers || []) : []))));
     
     const keywordArray = memories.keywords.split(",")
       .map(k => k.trim().toLowerCase())
