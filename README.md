@@ -29,7 +29,7 @@ En vez de pasar página como una persona normal, decidí sobreingenierizar una s
   - `O` – Abrir directamente el perfil en Instagram
 - **Heurísticas Lingüísticas:** Clasificación de nombres propios basada en diccionarios de nombres en español, catalán y francés para filtrar la demografía objetivo.
 - **Scoring de Relevancia:** Algoritmo que calcula la afinidad analizando palabras clave en biografías y comentarios (*Barcelona, BCN, Madrid, Toulouse, Andorra, esquí*).
-- **Proxy Local de Imágenes:** Middleware integrado en el servidor de desarrollo de Vite (`/api/image-proxy`) para descargar y servir las fotos de perfil de la CDN de Instagram sin bloqueos por CORS ni protección de hotlinking.
+- **Proxy Local de Imágenes y Fallbacks:** Middleware integrado en el servidor de desarrollo de Vite (`/api/image-proxy`) para procesar las imágenes. Las URLs directas de la CDN de Instagram caducan a las 24–48h por seguridad de Meta (`oe=...`), por lo que el dashboard integra un sistema de *fallback* automático mostrando las iniciales de cada perfil si la firma de la imagen ha expirado.
 - **Toolkit de Scraping (`scripts/`):**
   - [`scripts/scrape.js`](scripts/scrape.js): Extracción masiva de personas que dieron like a los posts objetivo usando HikerAPI.
   - [`scripts/scrape_comments.js`](scripts/scrape_comments.js): Extracción de autores y textos de comentarios.
@@ -51,6 +51,9 @@ npm install
 npm run dev
 ```
 Abre tu navegador en [http://localhost:5173](http://localhost:5173) (o entra en la [versión web en vivo](https://aamargant.github.io/snowgirl-finder/)). La aplicación arranca directamente con los conjuntos de datos reales cacheados de la extracción anterior (+4.000 perfiles analizados), por lo que puedes probarla y explorarla al instante sin necesidad de configurar ninguna API externa.
+
+> ℹ️ **Nota técnica sobre las fotos de perfil en la demo:**  
+> Las URLs de las imágenes extraídas corresponden a la CDN oficial de Instagram (`scontent-*.cdninstagram.com`). Meta protege estas URLs con tokens firmados temporalmente (`oe=...`) que expiran a las 24–48 horas para evitar el hotlinking. Al haber transcurrido ese periodo, la CDN devuelve un error `HTTP 403`, por lo que el dashboard activa su mecanismo de *fallback* mostrando automáticamente las iniciales de cada persona. Para ver fotos actualizadas en tiempo real, se puede usar el modo Live API.
 
 ### 3. Modo Live API (Opcional)
 Haz clic en el icono de **Ajustes** en la barra superior e introduce tu clave de acceso de [HikerAPI](https://hikerapi.com) para rastrear likes y resolver perfiles en tiempo real.
