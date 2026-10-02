@@ -6,6 +6,8 @@ Herramienta de investigación OSINT y panel de visualización de perfiles de Ins
 
 🌐 **Web en Vivo (Live Demo):** [https://aamargant.github.io/snowgirl-finder/](https://aamargant.github.io/snowgirl-finder/)
 
+> ⚠️ **Aviso sobre las fotos de perfil:** Las imágenes de los perfiles ya no se muestran en la página web debido a que las URLs de la CDN de Instagram caducan a las 24–48 horas por las medidas de protección y firmas temporales de Meta. Al haber expirado esos tokens, la CDN devuelve un error `403 Forbidden`, por lo que la aplicación muestra automáticamente avatares de respaldo con las iniciales de cada persona.
+
 ---
 
 ## 📖 La Historia
